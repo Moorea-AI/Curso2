@@ -1,0 +1,11 @@
+#Tarea1 S1C2
+##Manipulación de tensores en Numpy:
+#Dentro del conjunto de datos, seleccióne la esquina inferior que contenga  14×14  píxeles en cada una de las imágenes y visualice una de ellas.
+
+my_crop_slices_centered = train_images[:, 7:-7, 7:-7]
+
+digit = my_crop_slices_centered[0]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+
