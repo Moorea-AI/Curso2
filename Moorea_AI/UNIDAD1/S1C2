@@ -1,0 +1,674 @@
+<p><img alt="Colaboratory logo" height="140px" src="https://upload.wikimedia.org/wikipedia/commons/archive/f/fb/20161010213812%21Escudo-UdeA.svg" align="left" hspace="10px" vspace="0px"></p>
+
+<h1> Diplomado de Análisis de datos y Machine Learning en Python</h1>
+
+
+El presente diplomado hace parte del centro de Big Data de la facultad de ciencias exactas y naturales (FCEN) de la Universidad de Antioquia.
+
+## Más Recursos
+
+Recursos para aprender como usar Python, Jupyter y Colaboratory:
+
+### Trabajando con Notebooks del Colaboratory
+- [Introducción a Colaboratory](/notebooks/basic_features_overview.ipynb)
+- [Guía de  Markdown](/notebooks/markdown_guide.ipynb)
+- [Importar Librerías e Instalar Dependencias](/notebooks/snippets/importing_libraries.ipynb)
+- [Guardar y cargar cuadernos en GitHub](https://colab.research.google.com/github/googlecolab/colabtools/blob/master/notebooks/colab-github-demo.ipynb)
+- [Formularios Interactivos](/notebooks/forms.ipynb)
+- [Widgets Interactivos](/notebooks/widgets.ipynb)
+
+### Trabajando con Datos
+- [Cargar datos desde: Drive, Sheets y Google Cloud Storage](/notebooks/io.ipynb) 
+- [Gráficas: Visualizar los Datos](/notebooks/charts.ipynb)
+- [Introducción a BigQuery](/notebooks/bigquery.ipynb)
+
+### Introducción al Aprendizaje Automático
+Estos son algunos notebooks del curso virtual de google sobre aprendizaje automático. Ver la [página web del curso](https://developers.google.com/machine-learning/crash-course/) para obtener más información.
+- [Introducción a Pandas](/notebooks/mlcc/intro_to_pandas.ipynb)
+- [Conceptos de Tensorflow](/notebooks/mlcc/tensorflow_programming_concepts.ipynb)
+- [Primeros pasos con TensorFlow](/notebooks/mlcc/first_steps_with_tensor_flow.ipynb)
+- [Introducción a Redes Neuronales](/notebooks/mlcc/intro_to_neural_nets.ipynb)
+- [Introducción a datos escasos y embebimientos](/notebooks/mlcc/intro_to_sparse_data_and_embeddings.ipynb)
+
+### Hardware para cálculo en paralelo
+- [TensorFlow con GPUs](/notebooks/gpu.ipynb)
+- [TensorFlow con TPUs](/notebooks/tpu.ipynb)
+#Repaso de Tensores:
+
+Aunque no hayamos visto la definición de "tensores" en el curso 1, si que hemos trabajado con ellos haciendo referecia a ellos como arrays o arreglos.
+## Representaciones de datos en NN:
+
+En el ejemplo anterior, partimos de datos almacenados en arreglos multidimensionales de `numpy`, los cuales se conocen con el nombre de *tensores*. En general, todos los algoritmos de ML usan tensores como estructura base de los datos, siendo un campo fundamental de éstos. 
+
+En esencia, un tensor es un contenedor de datos, casi siempre datos numéricos. Por ejemplo, estamos familiarizados con las matrices, que son tensores 2D: los tensores son una generalización de matrices a un número arbitrario de dimensiones (a una dimensión a menudo se denomina eje). 
+## Escalares (Tensores 0D)
+
+Un tensor que contiene un solo número se le llama escalar, tensor escalar, tensor 0-dimensional ó 0D tensor. En `numpy` se tiene:
+
+- float32 o float64.
+- int 32 o int 64.
+
+Recordemos
+# Array 
+import numpy as np
+
+x0 = np.array(12)
+x0.ndim
+# Vectores (Tensores 1D)
+
+A un array de número se le llama vector, o tensor 1D. Decimo entonces que un tensor 1D tiene exactamente 1 eje. 
+
+En `numpy` lo definimos como:
+x1 = np.array([12, 3, 6, 14])
+x1
+x1.ndim
+El anterior vector tiene 5 entradas, por lo tanto es llamado *vector 5-dimensional*. La *dimensionalidad* puede denotar, tanto el numero de entradas a lo larco de un eje específico, o el número de ejes en un tensor.  En el caso anterior, y para evitar confusiones con los tensor 5D, es mejor referirnos éste como *tensor de rango 5*. 
+## Matrices (Tensores 2D)
+
+Un arreglo de vectores es una matriz, un un tensor 2D. Una matriz tiene dos ejes, a los cuales nos referimos comúnmente como filas y columnas. Una matriz representa, visualmente, una malla rectancular de números.
+
+En numpy se define como:
+x2 = np.array([[5, 78, 2, 34, 0],
+[6, 79, 3, 35, 1],
+[7, 80, 4, 36, 2]])
+x2.ndim
+Recordemos que a las entradas del primer eje se le llaman fillas y las entradas del segundo eje, columnas. 
+## Tensores 3D y tensores de dimensión mayor:
+
+Si agrupamos matríces de dimensiones iguales hablamos de un tensor 3D, que puede interpretarse, visualmente como un cubo de numeros. 
+
+En numpy se define como:
+x3 = np.array([[[5, 78, 2, 34, 0],
+[6, 79, 3, 35, 1],
+[7, 80, 4, 36, 2]],
+[[5, 78, 2, 34, 0],
+[6, 79, 3, 35, 1],
+[7, 80, 4, 36, 2]],
+[[5, 78, 2, 34, 0],
+[6, 79, 3, 35, 1],
+[7, 80, 4, 36, 2]]])
+
+x3.ndim
+Al agrupar tensores 3D en una arreglo, podemos crear tensores 4D, y así sucesivamente. En deep learning se trabajará con tensores de rango 0 a 4, y en caso como el procesamiento de videos, puede llegarse a tensores de rango 5.
+### Atributos claves:
+ Un tensor se encuentra determinado por tres atributos:
+
+ * *Numero de ejes*: (rango): `ndim`.
+ * *Forma*: que en python es una tupla de enteros que describe cuantas dimensiones tienen el tensor a lo largo de cada eje.  A este atributo se accede mediante `shape`.
+ * *Data type*: Corresponde a los tipos de datos que contiene el tensor y se accede a mediante el atributo `dtype`.
+print("Dimensión:", x3.ndim)
+print("Forma", x3.shape)
+print("Tipo de datos: ", x3.dtype)
+Veamos un ejemplo concreto de una base de datos MNIST de `keras`:
+from keras.datasets import mnist
+(train_images, train_labels), (test_images, test_labels) = mnist.load_data()
+http://yann.lecun.com/exdb/mnist/ 
+print(train_images.ndim)
+print(train_images.shape)
+print(train_images.dtype)
+A continuación se resume la característica del dataset:
+
+* Tensor 3D
+* Tipos de datos: enteros de 8-bits.  
+Visualicemos una imágen:
+digit = train_images[9]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+digit[0][25]=100
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+##Manipulación de tensores en Numpy:
+
+En el ejeumplo anterior se selecionó un digito específico a junto al primer eje usando la sintaxis train_images [i]. La selección de elementos específicos en un tensor se denomina corte de "tensor slicing". Veamos las operaciones de "tensor slicing" que puede hacerse con los arreglos de `numpy`.
+
+Para selecionar los digitos de 10 a 100 (si incluir el 100) hacemos:
+
+my_slice = train_images[10:100]
+print(my_slice.shape)
+La anterior operación es equivalente a la selección de todas las dimensiones de los ejes mediante : 
+my_slice = train_images[10:100, :, :]
+my_slice.shape
+Y lo anterior es equivalenta a
+my_slice = train_images[10:100, 0:28, 0:28]
+my_slice.shape
+De forma general, podemos seleccionar entre dos índices cualquiera a lo largo de un eje del tensor.
+## Problema:
+
+Dentro del conjunto de datos, seleccióne la esquina inferior que contenga $14\times14$ píxeles en cada una de las imágenes y visualice una de ellas. 
+Haga click **aquí** si tiene problemas con la solución.
+
+
+
+
+<!----:
+# solución:
+my_slice_corner = train_images[:, 14:, 14:]
+
+digit = my_slice_corner[3]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+
+----->
+my_slice_corner = train_images[:, 14:, 14:]
+
+digit = my_slice_corner[3]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+Recordemos que también es posible usar índices negativos. Los índices negativos indican una posición relativa al final del eje en cuestión. Recorte, por ejemplo, las imagenes anteriores para que queden centradas en matríces de 14x14.
+my_crop_slices_centered = train_images[:, 7:-7, 7:-7]
+
+digit = my_crop_slices_centered[0]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+Haga click **aquí** si tiene problemas con la solución:
+
+
+<!-----
+my_crop_slices_centered = train_images[:, 7:-7, 7:-7]
+
+digit = my_crop_slices_centered[0]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+----->
+my_slice2 = train_images[:, -15:-1, -15:-1]
+digit = my_slice2[5]
+import matplotlib.pyplot as plt
+plt.imshow(digit, cmap=plt.cm.binary)
+plt.show()
+## Noción de batches
+
+En general, el primer eje (eje 0, ya que la indexación comienza en 0) de todos los  tensores de datos que encuentre en DLserá el eje de muestras (a veces denominado dimensión de muestras). En el ejemplo MNIST, las muestras son imágenes de dígitos.
+
+Además, los modelos de DL no procesan un conjunto de datos completo a la vez; en su lugar, dividen los datos en pequeños lotes. Por ejemplo:
+batch1 = train_images[:128]
+batch2 = train_images[128:256]
+El n-ésimo batch sería:
+
+$$\text{batch} = \text{train_images}[128 * n:128 * (n + 1)]$$
+Cuando considere un tensor batch, el primer eje (eje 0) es conocido como la dimensión del batch. Este término es comun mente usado en Keras y otras librerías de DL.
+## Ejemplo reales de tensores:
+
+* *Vector de datos:* Tensor 2D de forma `(samples,features)`.
+
+* *Datos de series de tiempos o secuencias:* Tensor 3D de forma `(samples, timesteps, features)`.
+
+* *Imágenes:* Tensores 4D de forma `(samples,height,width,channels)` o `(samples,channels,height,width)`.
+
+* *Videos:* Tensores 5D de forma `(samples,frames, height,width,channels)` o `(samples, height,frames,channels,height,width)`. 
+# Repaso de Funciones y Clases
+<p><a name="funci"></a></p>
+
+## Funciones
+
+Una función es un bloque de código organizado y reutilizable que se utiliza para realizar una única acción relacionada. Las funciones proporcionan una mejor modularidad para su aplicación y un alto grado de reutilización de código.
+
+>`def Nombre(arg1,arg2,...):`
+>> `sentencias`
+Definamos la función exponencial $a^b$
+def Exp(a,b):
+  exp = a**b
+  print(exp)
+  return
+  
+Exp(2,2)  
+La sentencia *return* termina la función,  devolviendo opcionalmente uno o varios valores. Una declaración de retorno sin argumentos es lo mismo que devolver *none* (como en el caso anterior)
+def Exp(a,b):
+  return a**b
+  
+def Exp2(a,b):
+  return a**b,a**b+1,a**b+2
+
+print(Exp(2,2),type(Exp(2,2)))
+
+print(Exp2(2,2),type(Exp2(2,2)))
+
+## Problema:
+
+Escriba un código en Python que devuelva el máximo valor de un vector.
+Haga click en **esta** celda si tiene problemas con la solución.
+
+<!---:
+
+def max_array1D(arr): 
+  
+    # Initialize maximum element 
+    max = arr[0] 
+  
+    # Traverse array elements from second 
+    # and compare every element with  
+    # current max 
+    for i in range(1, arr.shape[0]): 
+        if arr[i] > max: 
+            max = arr[i] 
+    return max
+
+---->
+def max_array1D(arr): 
+  
+    # Initialize maximum element 
+    max = arr[0] 
+  
+    # Traverse array elements from second 
+    # and compare every element with  
+    # current max 
+    for i in range(1, arr.shape[0]): 
+        if arr[i] > max: 
+            max = arr[i] 
+    return max
+<p><a name="class"></a></p>
+
+## Clases/Objetos
+
+Python es un lenguaje orientado a objetos. Casi todo en Python representa un objeto, el cual esta constituidos por sus atributos y métodos. 
+
+Una clase es un "ente creador", o un prototipo para la creación de objetos.
+
+Las clases proporcionan un medio de agrupar datos y "funcionalidad". La creación de una nueva clase crea un nuevo tipo de objeto, lo que permite crear nuevas *instancias* de ese tipo. Cada instancia de la clase puede tener sus propios atributos. Las instancias de una clase también pueden tener *métodos* (definidos por su clase) para modificar su estado.
+
+>class Name():
+>>sentencias
+Los atributos son como propiedades que queremos añadir a la clase 
+class Auto():
+  marca = ''
+  color = ''
+Creemos un objeto de la clase Auto con algunos atributos
+Mi_auto = Auto()
+Mi_auto.marca = 'ferrari'
+Mi_auto.color = 'rojo'
+
+print(Mi_auto.marca)
+print(Mi_auto.color)
+Dentro de las clases podemos definir funciones, conocidas como *métodos* 
+class Persona():
+  nombre = ''
+  edad = ''
+  
+  def print_nombre(self):
+    print('nombre:',self.nombre)
+    
+  def print_edad(self):
+    print('edad:',self.edad)
+    
+Person1 = Persona()
+Person1.nombre = 'carolina'
+Person1.edad = 20
+
+Person1.print_nombre()
+Person1.print_edad()
+Los métodos necesitan tener un argumento convenientemente llamado self, que se refiere al objeto del método que está siendo llamado. Podemos pasar más de un argumento si así lo deseamos
+class Persona:
+    nombre = ''
+    edad = ''
+     
+    def print_informacion(self, nombre, edad):
+        print('nombre:',self.nombre)
+        print('edad:',self.edad)
+             
+Person2 = Persona()
+Person2.nombre = 'carlos'
+Person2.edad = '30'
+Person2.print_informacion(Person2.nombre, Person2.edad)
+La operación de creación de instancias crea un objeto vacío. A muchas clases les gusta crear objetos con instancias personalizadas a un estado inicial específico. Por lo tanto, una clase puede definir un método especial llamado __init __ (), como este:
+class Person:
+  def __init__(self,n,e):
+    self.nombre = n
+    self.edad = e
+      
+Person3 = Person('mario','55')
+print('nombre:',Person3.nombre)
+print('edad:',Person3.edad)    
+## Problema
+
+Creen una clase `Point` en coordenadas cartesianas, que se su constructor inicialice el objeto a un punto con unas coordenadas dadas. Además, la clase debe contener dos métodos:
+
+* `translate()`, que reciba como argumentos dos valores arbitrarios $(x,y)$.
+* `__str__(self)`: que imprima el punto en precisión de coma flotante.
+Haga click en **esta** celda para ver la solución en caso de dificultades.
+<!----
+
+class Point:
+    """
+    Simple class for representing a point in a Cartesian coordinate system.
+    """
+    
+    def __init__(self, x, y):
+        """
+        Create a new Point at x, y.
+        """
+        self.x = x
+        self.y = y
+        
+    def translate(self, dx, dy):
+        """
+        Translate the point by dx and dy in the x and y direction.
+        """
+        self.x += dx
+        self.y += dy
+        
+    def __str__(self):
+        return("Point at [%f, %f]" % (self.x, self.y))
+
+!---->
+
+class Point:
+    """
+    Simple class for representing a point in a Cartesian coordinate system.
+    """
+    
+    def __init__(self, x, y):
+        """
+        Create a new Point at x, y.
+        """
+        self.x = x
+        self.y = y
+        
+    def translate(self, dx, dy):
+        """
+        Translate the point by dx and dy in the x and y direction.
+        """
+        self.x += dx
+        self.y += dy
+        
+    def __str__(self):
+        return("Point at [%f, %f]" % (self.x, self.y))
+# Introducción al Deep Learning
+
+
+## ¿Qué es Deep Learning?
+
+![picture](https://i.imgur.com/BtyLC2y.png)
+
+
+Como se vió la inteligencia artificial nace a partir de preguntarnos si era posible automatizar máquinas para que realizaran tareas intelectuales normalmente realizadas por humanos. A partir de esto surgen ramificaciones de la IA entre las cuales encontramos el machine learning y a su vez el Deep learning, éste último un subcampo del machine learning.
+
+El **Deep Learning** es una forma de tratar las representaciones de los datos que pone énfasis en el aprendizaje a traves de capas sucesivas, con lo cual se busca  tener representaciones cada vez mas significativas que nos permitan estar cerca de las salidas esperadas, es decir, a traves de las capaz se busca extraer progresivamente caracteristicas de un valor mas refinado.
+
+![picture](https://i.imgur.com/sOtasrr.png)
+
+Donde por representaciones hacemos referencia a todas esas posibles transformaciones que realizamos a nuestros datos de forma tal que puedan facilitar nuestra tareas.
+
+El número de capaz que contribuyen en un modelo de datos es llamado **depth** (profundidad); en general tenemos cientos de capaz en nuestros modelos, pero hay ciertos casos en los que solo se cuenta con una o dos capaz a esto se le llama **Shallow learning**(Aprendizaje poco profundo). El deep learning también es llamado  **Layered representations Learning** y **Hierarchical representations learning**. En la siguiente imagen podemos ver un esquema de los modelos de deep learning a grandes razgos.
+
+![picture](https://i.imgur.com/318WfrZ.png)
+
+
+En el Deep Learning el aprendizaje se da a partir de modelos conocidos como redes neuronales artificiales, los cuales son estructuras a capaz conectadas unas a otras, donde el nombre de red neuronal viene de la neurobiología y su comparación con el cerebro, si bien estos modelos se inspiran en este, las redes neurales *no son modelos del cerebro*, pues no se tiene la certeza de como éste funciona, es por esto que muchas personas están dejando a un lado la terminología que hace referencia a aspectos biológicos.
+
+![picture](https://i.imgur.com/uoUu9sE.png)
+
+
+En la anterior se puede ver un esquema general de una red profunda, la cual podemos pensar como una multiestación de operaciones de destilación de información, donde esta va a traves de diferentes filtros y se retorna altamente purificada, es decir, vamos obteniendo a traves de las capaz diferentes caracterisiticas que harán mas refinadas nuestras representaciones y por ende nos acercaran más a las salidas buscadas.
+
+## ¿Cómo trabaja Deep Learning?
+
+Igual que en machine learning, se tiene un mapeo input-target,esta vez a traves de una secuencia de transformaciones de los datos (capaz), como se puede ver en la siguiente imagen.
+
+![picture](https://i.imgur.com/yLfzLKI.png)
+
+Donde podemos ver que se involucran unos elementos llamados **pesos**, los cuales en esencia son una manada de números que guardan la especificación de qué le hace una capa a sus datos de entrada, es decir, la transformación implementada por una capa es parametrizada por sus pesos. En este sentido se busca encontrar a partir de lo que llamamos aprendizaje el conjunto de valores para los pesos con los cuales  la red mapea correctamente los valores de entrada con sus respectivas etiquetas.
+
+Por lo tanto a mi red neuronal le ingreso los datos de entrada, los cuales pasan a traves de las diferentes capaz realizando esa "destilación" de información y sale mi predicción (salida), donde en nuestra fase de entrenamiento debemos controlar este valor de salida, es decier necesitamos poder medir que tan lejos nuestra salida está del valor esperado, es aquí donde toma juego la llamada **loss function**(función de perdida) o **Objective function**(funció objetivo); esta toma la predicción y la verdadera etiqueta y calcula cierto puntaje para la distancia entres estas, logrando así capturar que tan bien la red neuronal está haciendo su trabajo.
+
+![picture](https://i.imgur.com/tIWqNoP.png)
+
+Teniendo esto el objetivo está en ajustar los pesos de forma tal que se disminuya la función de perdida, esto se logra usando un optimizador he implementado el **backpropagation**.
+
+## ¿ Qué hemos alcanzado con Deep Learning?
+
+Con la aplicacion de estos modelos se han alcanzado avances a niveles que muchas veces pueden estar cerca al de un humano; algunos como los siguientes:
+* Clasificación de imagenes
+* Reconocimiento de voz
+* Transcripión de textos
+* Mejora en las traducciones automáticas
+* Conversión de voz a texto
+* Carros autonomos
+* Entre otros
+
+A | B
+- | - 
+![alt](https://i.imgur.com/5p8aMXy.png) | ![alt](https://miro.medium.com/max/1966/1*nJNxFmJaHxyJTtVFkhGTlg.png)
+
+## ¿Qué hace diferente a Deep Learning?
+
+* Ofrece mejores soluciones en algunos problemas
+* Automatiza el feature engineering
+* Todas las capaz aprenden conjuntamente,esto lo hace paralelizable.
+
+Si bien estas son unas de las características que destacan, existen muchas más que nos permiten que modelos complejos puedan ser abordados con facilidad y mayor velocidad en comparación con hace unos años.
+
+
+## ¿ Por qué DL ahora?
+
+Si bien las teorías y modelos de DL y en general de la IA se han planteado hace ya un buen tiempo, el rápido crecimiento en los últimos años se ha dado debido a los avances en **hardware** y **Datos**, pues básicamente la IA es un campo experimental mas que teorico, eso no implica que la teoría haya quedado a un lado, pues el avance en capacidad de computo y datos permiten a su vez el avance en nuevos algoritmos. 
+
+# Redes neuronales artificiales
+
+Estas fueron inspiradas en las neuronas biológicas y sus conexiones en el cerebro de los animales, donde estas son celulas nerviosas que proveen unidades funcionales fundamentales para el sistema nervioso de los animales. Las neuronas biológicas se comunican a través de impulsos electro-químicos, llamados señales.Estas están conectadas unas a otras organizadas en redes de millones de nueronas. En la siguiente imagen se pueden ver algunos de los componentes de las neuronas biológicas.
+
+
+<p><img alt="Colaboratory logo" height="300px" src="https://i.imgur.com/uEgQGB3.png" align="center" hspace="10px" vspace="0px"></p>
+
+Las redes neuronales artificiales (Artificial neural networks), fueron introducidas inicialmente por  Warren McCulloh y Walter Pitts  en los años 40, donde mostraban un  modelo de como las neuronas biológicas podían  realizar complejos cálculos a partir de la lógica proposicional. Estos propusieron un modelo de neurona artificial donde se tenían entradas y salidas binarias.
+
+![picture](https://i.imgur.com/qULaQPN.png)
+
+Ellos mostraron que a partir de la unión de varias de estas neuronas artificiales, es decir a traves de una red nueronal artificial, se podía calcular cualquier proposición lógica que se quisiera.
+
+## El perceptrón
+
+A finales de los años 50's  fue diseñado por Frank Rosenblant el perceptrón, inspirandose en los trabajos de McCulloh y Pitts, es considerada la arquitectura mas simple en Deep Learning. Es un  modelo lineal de clasificación binaria  con una relaicón de entrada y salida como se ve en la siguiente imagen:
+
+<p><img alt="Colaboratory logo" height="300px" src="https://i.imgur.com/3S8Hhfy.png" align="center" hspace="10px" vspace="0px"></p>
+
+Donde a cada dato de entrada se le asocia un peso y luego de realizar la sumatoria asociada se pasa por la función de activación, que para el caso del perceptrón normalmente es la función escalón de **Heaviside**, aunque algunas veces también se usa la función sign, ambas definidas de la siguiente manera:
+
+\begin{equation} 
+heaviside(z) = 
+     \begin{cases}
+      \text{0} &\quad\text{if}&  z < 0\\
+      \text{+1} &\quad\text{if}& z\geq 0\\
+     \end{cases}\\     
+\end{equation}
+
+\begin{equation} 
+sing(z) = 
+     \begin{cases}
+      \text{-1} &\quad\text{if}&  z < 0\\
+      \text{0} &\quad\text{if}&  z = 0\\
+      \text{+1} &\quad\text{if}&  z > 0\\
+     \end{cases}
+\end{equation}
+
+
+
+
+
+La salida de la función paso es la salida del perceptrón y me da la clasificación de los valores de entrada. El algoritmo de aprendizaje del perceptrón no puede clasificar entradas que no son linermente separables.
+
+## Multilayer feed forward networks
+
+La multilayer feed forward network es una red neuronal con una capa de entrada, una o mas capaz ocultas y una capa de salida. Cada capa tiene una o mas nuronas artificiales, éstas son similares al perceptrón a diferencia de que su función de activación dependerá de los propositos específicos de la capa en la red.
+
+<p><img alt="Colaboratory logo" height="300px" src="https://i.imgur.com/fcBNqyp.png" align="center" hspace="10px" vspace="0px"></p>
+
+Como vemos se tiene una estructura como la del perceptrón, a diferencia de la antes mencionada flexibilidad en cuanto a la función de activación, algunas de las más utilizadas se pueden ver en el siguiente gráfico
+
+![picture](https://i.imgur.com/j8vunMo.png)
+
+Como se ha mencionado, las redes neuronales artificiales son un conjunto de neuronas artificiales agrupadas en lo que denominamos capaz, estas usan en cada capa el mismo tipo de función de activación, donde para una capa diferente a la de entrada, sus datos de entrada serán las salidas de la capa previa (activación). Nuestra salida o predicción, será un mapeo producto de los datos de entrada, donde podrá ser el resultado de una clasificación o regresión de acuerdo a nuestro objetivo.En general la capa de salida usa como función de activación  la función sigmoid o softmax.
+
+
+<p><img alt="Colaboratory logo" height="300px" src="https://i.imgur.com/9QkhmiE.png" align="center" hspace="10px" vspace="0px"></p>
+
+En la anterior se puede ver un bosquejo de lo que es una red neuronal artificial.
+# Introduccion a keras
+Keras es una interfaz de programación de aplicaciones (API) que permite de manera fácil construir, entrenar, evaluar y ejecutar casi cualquier tipo de red neuronal. Keras fue creado por François Chollet como parte de un proyecto de investigación y fue lanzando al mercado de manera gratuita en marzo del 2015.
+Keras ganó rápidamente popularidad debido a su facilidad de uso , flexibilidad y diseño .
+
+Algunas características claves de keras son:
+
+* Permite que el mismo código se ejecute sin problemas en la CPU o GPU. 
+* Tiene una API fácil de usar que facilita la creación rápida de prototipos de modelos de aprendizaje profundo.
+* Es compatible con arquitecturas de red arbitrarias. Esto significa que Keras es apropiado para construir esencialmente cualquier modelo de aprendizaje profundo, desde una red generativa de confrontación hasta una máquina neural de Turing.
+
+
+Keras tiene más de 200,000 usuarios, que van desde investigadores académicos e ingenieros en empresas nuevas y grandes empresas hasta estudiantes graduados y aficionados. Keras se usa en Google, Netflix, Uber, CERN, Yelp, Square y cientos de nuevas empresas que trabajan en una amplia gama de problemas. Keras también es popular en Kaggle, el sitio web donde se realizan competencia de aprendizaje automático, donde casi todas las competencias recientes de aprendizaje profundo se han ganado utilizando los modelos Keras.
+
+## Keras, TensorFlow, Theano, CNTK, y Pytorch
+
+Para realizar los cálculos requeridos por las redes neuronales, Keras usa librerías especializada y bien optimizada. TensorFlow, CNTK y Theano son algunas de las librerias principales para el aprendizaje profundo en la actualidad. Theano (http://deeplearning.net/software/theano) es desarrollado por el laboratorio MILA en la Universidad de Montreal, TensorFlow (www.tensorflow.org) es desarrollado por Google, CNTK (https://github.com/Microsoft / CNTK) es desarrollado por Microsoft y Pytorch es desarrollado por Facebook (https://pytorch.org/).
+
+Se recomienda utilizar TensorFlow como la biblioteca predeterminada para la mayoría de las tareas de aprendizaje profundo, ya que es la más ampliamente adoptada, escalable y lista para producción.
+
+## Configurar una estación de trabajo de aprendizaje profundo
+
+Antes de comenzar a desarrollar aplicaciones de aprendizaje profundo, debe configurar su estación de trabajo. Es muy recomendable, aunque no estrictamente necesario, que ejecute código de aprendizaje profundo en una GPU. Algunas aplicaciones, en particular, el procesamiento de imágenes con redes convolucionales será extremadamente lento en la CPU, incluso en una CPU multinúcleo rápida, e incluso para las aplicaciones que se pueden ejecutar de manera realista en la CPU, generalmente se verá un aumento de la velocidad en un factor de 5 o 10 al usar una GPU moderna.
+
+
+Al usar google colaboratory es fácil establecer la GPU como lugar de trabajo,  solo debes ir a la pestaña editar , luego seleccionar ajustes de notebook y finalmente seleccionar GPU 
+
+
+<p><img alt="Colaboratory logo" height="450px" src="https://i.imgur.com/fKMwMLg.png" align="center" hspace="10px" vspace="0px"></p> 
+
+Una vez establecido el lugar de trabajo, podemos empezar a usar Keras, para esto el primer pasa es importar Keras seleccionando TensorFLow como librería para realizar los cálculos matemáticos. 
+
+
+
+from tensorflow import keras
+## Ejemplo: clasificador de imágenes usando Keras
+
+Para ilustrar la manera en que Keras es usado en el aprendizaje profundo, realizaremos un ejemplo de clasificación usando conjunto de datos *Fashion MNIST* el cual consta de 70,000 imágenes (las imágenes representan artículos de moda) en escala de grises de 28 × 28 píxeles cada una y con 10 clases. 
+
+### Uso de Keras para cargar el conjunto de datos
+
+Comencemos cargando el conjunto de datos Fashion MNIST. Keras tiene una serie de funciones para cargar conjuntos de datos populares en keras.datasets. El conjunto de datos ya está dividido entre un conjunto de entrenamiento y un conjunto de prueba, pero puede ser útil dividir aún más el conjunto de entrenamiento para tener un conjunto de validación:
+
+
+
+
+
+from keras.datasets import fashion_mnist
+https://www.kaggle.com/datasets/zalando-research/fashionmnist
+
+fashion_mnist = keras.datasets.fashion_mnist
+(X_train_full, y_train_full), (X_test, y_test) = fashion_mnist.load_data()
+El conjunto de entrenamiento contiene 60,000 imágenes en escala de grises, cada una de 28x28 píxeles:
+X_train_full.shape
+La intensidad de cada píxel se representa como un byte (enteros entre 0 a 255):
+X_train_full.dtype
+Ahora dividamos el conjunto de datos de entrenamiento en un conjunto de validación y un conjunto de entrenamiento (más pequeño). También escalamos las intensidades de píxeles en el rango 0-1 y las convertimos en flotantes al dividiéndolas por 255.
+X_valid, X_train = X_train_full[:5000] / 255., X_train_full[5000:] / 255.
+y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
+X_test = X_test / 255.
+y_train[0]
+visualicemos la primera imagen del conjunto de datos usando matplotlib
+import matplotlib.pyplot as plt 
+#import seaborn as sns; sns.set()
+plt.imshow(X_train[0], cmap="binary")
+plt.axis('off');
+Las etiquetas van de 0 a 9, por lo que hay 10 tipos diferentes de ropa.
+import numpy as np
+np.unique(y_train)
+los nombres para cada una de las clases son: 
+class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
+               "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
+Entonces, la primera imagen en el conjunto de entrenamiento es un abrigo(Coat)
+class_names[y_train[0]]
+El conjunto de validación contiene 5,000 imágenes, y el conjunto de prueba contiene 10,000 imágenes:
+X_valid.shape
+X_test.shape
+visualicemos ahora algunas de las imágenes de los datos de entrenamiento con su respectiva etiqueta
+fig , ax =  plt.subplots(3,10, figsize=(15,5))
+for i , ax in enumerate(ax.flat):
+  ax.imshow(X_train[i], cmap='binary')
+  ax.set_axis_off()
+  ax.set_title(class_names[y_train[i]])
+## Uso de Keras para crean un modelo de aprendizaje profundo 
+
+keras.backend.clear_session()
+model = keras.models.Sequential();
+model.add(keras.layers.Flatten(input_shape=[28, 28]));
+model.add(keras.layers.Dense(300, activation="relu"));
+model.add(keras.layers.Dense(100, activation="relu"));
+model.add(keras.layers.Dense(10, activation="softmax"));
+Veamos este código línea por línea:
+* La primera línea crea un modelo secuencial. Este es el tipo más simple de modelo para redes neuronales que están compuestas de una sola pila de capas, conectadas secuencialmente. Esto se llama la API secuencial.
+
+* Luego , construimos la primera capa y la agregamos al modelo. Es una capa Flatten cuyo papel es simplemente convertir cada imagen de entrada en un arregle 1D:
+
+* Luego, agregamos una capa oculta densa con 300 neuronas la cual utilizará la función de activación ReLU.
+
+* Luego, agregamos una segunda capa oculta densa con 100 neuronas, que también utiliza la función de activación ReLU.
+
+* Finalmente, agregamos una capa de salida densa con 10 neuronas (una por clase), usando la función de activación softmax (porque las clases son exclusivas).
+
+El método `summary()` muestra un resumen de todas las capas del modelo.
+
+model.summary()
+## Compilando el modelo
+
+Después de crear un modelo, se debe llamar el método `compile()` para especificar la función de pérdida y el optimizador a utilizar. Opcionalmente, también puede especificar una lista de métricas  para calcular durante el entrenamiento y la evaluación:
+model.compile(loss='sparse_categorical_crossentropy',
+              optimizer='sgd', 
+              metrics=["accuracy"])
+## Entrenando y evaluando el modelo
+Ahora el modelo está listo para ser entrenado. Para esto simplemente necesitamos llamar a su método `fit()`. Le pasamos las características de entrada (X_train) y las clases de destino (y_train), así como la cantidad de épocas para entrenar (o de lo contrario, sería predeterminado a solo 1). También pasamos un conjunto de validación (esto es opcional): Keras medirá la pérdida y las métricas adicionales en este conjunto al final de cada época, lo cual es muy útil para ver qué tan bien se desempeña realmente el modelo.
+history =  model.fit(X_train, y_train, epochs=20, validation_data=(X_valid, y_valid))
+¡Y eso es todo! La red neuronal está entrenada. En cada época durante el entrenamiento, Keras muestra el número de instancias procesadas hasta el momento (junto con una barra de progreso), el tiempo medio de entrenamiento, la pérdida (loss) y la precisión (accuracy), ambas calculadas en el conjunto de entrenamiento y el conjunto de validación.
+
+El método `fit()` devuelve un objeto "History" que contiene los parámetros de entrenamiento (history.params), la lista de épocas por las que pasó (history.epoch) y, lo más importante, un diccionario (history.history) que contiene la pérdida y las métricas adicionales que midió al final de cada época en el conjunto de entrenamiento y en el conjunto de validación (si corresponde). 
+
+usando la librería Pandas y matplotlib podemos visualizar las curvas de aprendizaje
+import pandas as pd
+df=pd.DataFrame(history.history)
+df.head()
+df.plot(figsize=(8, 5))
+Se puede ver que tanto la precisión de entrenamiento como la de validación aumentan constantemente durante el entrenamiento, mientras que la pérdida de entrenamiento y validación disminuye. Ademas , las curvas de validación están bastante cerca de las curvas de entrenamiento, lo que significa que no hay demasiado sobreajuste(overfitting).
+
+Ahora usemos el modelo ya entrenado sobre nuestros datos de prueba (X_test)
+model.evaluate(X_test,y_test)
+## Usando el modelo para hacer predicciones
+
+Ahora, podemos usar el método `predict()` para hacer predicciones sobre nuevas instancias. Como no tenemos instancias nuevas reales, solo usaremos las primeras 3 instancias del conjunto de prueba:
+X_new = X_test[:3]
+y_proba = model.predict(X_new)
+y_proba.round(2)
+Como puede ver, para cada caso, el modelo estima una probabilidad por clase, desde la clase 0 hasta la clase 9. Si solo le importa la clase con la probabilidad estimada más alta (incluso si esa probabilidad es bastante baja), puede usar el método pre `dict_classes()` en su lugar
+y_pred = model.predict_classes(X_new)
+y_pred
+np.array(class_names)[y_pred]
+y_new = y_test[:3]
+y_new
+plt.figure(figsize=(7.2, 2.4))
+for index, image in enumerate(X_new):
+    plt.subplot(1, 3, index + 1)
+    plt.imshow(image, cmap="binary", interpolation="nearest")
+    plt.axis('off')
+    plt.title(class_names[y_test[index]], fontsize=12)
+## Reto 
+Suba una imagen propia y haga una predicción usando el modelo entrenado
+Haga click **aquí** si tiene problemas con la solución:
+
+<!-----
+from google.colab import files
+uploaded = files.upload()
+#Usando OpenCV
+import cv2
+data = cv2.imread("img.jpg",cv2.IMREAD_GRAYSCALE)
+data = cv2.resize(data,(28,28))
+#Predecir
+y_pred = model.predict_classes(X_new.reshape(1,28,28))
+----->
+from google.colab import files
+uploaded = files.upload()
+#Usando OpenCV
+import cv2
+data = cv2.imread("img.jpg",cv2.IMREAD_GRAYSCALE)
+data = cv2.resize(data,(28,28))
+#Predecir
+y_pred = model.predict_classes(X_new.reshape(1,28,28))
